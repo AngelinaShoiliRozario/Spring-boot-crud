@@ -20,7 +20,6 @@ public class SpringcrudApplication {
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
 		return runner -> {
 			System.out.println("The Project beans has been loaded");
-			getStudentByName(studentDAO);
 		};
 	}
 
@@ -30,6 +29,25 @@ public class SpringcrudApplication {
 		studentDAO.save(student);
 		System.out.println("Saved the student, id = " + student.toString());
 	}
+	public void createManyStudent(StudentDAO studentDAO){
+		Student student1 = new Student("Paul","Cruze","s@gmail.com");
+		Student student2 = new Student("Shaun","Rozario","s@gmail.com");
+		Student student3 = new Student("Rickson","Akter","shoili@gmail.com");
+		Student student4 = new Student("Sammy","Shamual","s@gmail.com");
+		Student student5 = new Student("Daniel","Prek","so@gmail.com");
+		System.out.println("Saving the Student...............");
+		studentDAO.save(student1);
+		System.out.println("Saved the student, id = " + student1.toString());
+		studentDAO.save(student2);
+		System.out.println("Saved the student, id = " + student2.toString());
+		studentDAO.save(student3);
+		System.out.println("Saved the student, id = " + student3.toString());
+		studentDAO.save(student4);
+		System.out.println("Saved the student, id = " + student4.toString());
+		studentDAO.save(student5);
+		System.out.println("Saved the student, id = " + student5.toString());
+		System.out.println("Saved Five Students.................");
+	}
 	public void findStudent(StudentDAO studentDAO){
 		Student student = studentDAO.findById(1);
 		System.out.println("student found "+ student.toString());
@@ -37,7 +55,7 @@ public class SpringcrudApplication {
 	public void getAllStudent(StudentDAO studentDAO){
 		List<Student> students = studentDAO.findAll();
 		for(Student tempStudent : students){
-			System.out.println("Student "+tempStudent.getFirstName());
+			System.out.println("Student "+tempStudent.toString());
 		}
 	}
 	public void getStudentByName(StudentDAO studentDAO){
@@ -45,5 +63,20 @@ public class SpringcrudApplication {
 		for(Student tempStudent : students){
 			System.out.println(tempStudent.toString());
 		}
+	}
+	public void updateStudent(StudentDAO studentDAO){
+		Student student = studentDAO.findById(1);
+		student.setFirstName("Shoili");
+		studentDAO.update(student);
+	}
+	public void deleteStudentById(StudentDAO studentDAO){
+		System.out.println("Deleting the Student ................");
+		studentDAO.delete(3);
+	}
+	public void deleteManyStudent(StudentDAO studentDAO){
+		studentDAO.deleteManyByEmail("s@gmail.com");
+	}
+	public void deleteAllStudent(StudentDAO studentDAO){
+		studentDAO.deleteAll();
 	}
 }

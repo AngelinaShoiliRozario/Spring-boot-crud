@@ -2,6 +2,7 @@ package com.springcrud.springcrud.dao;
 
 import com.springcrud.springcrud.entity.Student;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,4 +44,36 @@ public class StudentDAOImplementation implements StudentDAO{
         return theQuery.getResultList();
     }
 
+    @Override
+    @Transactional
+    public void update(Student student) {
+        entityManager.merge(student);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Integer id) {
+        //Student tempStudent = entityManager.find(Student.class,id);
+        //entityManager.remove(tempStudent);
+
+        //OR
+
+        Query theQuery = entityManager.createQuery("DELETE FROM Student WHERE id = :theid");
+        theQuery.setParameter("theid",id);
+        theQuery.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void deleteManyByEmail(String email) {
+        Query theQuery = entityManager.createQuery("DELETE FROM Student WHERE email = :email");
+        theQuery.setParameter("email",email);
+        theQuery.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public int deleteAll() {
+        return entityManager.createQuery("DELETE FROM Student").executeUpdate();
+    }
 }
