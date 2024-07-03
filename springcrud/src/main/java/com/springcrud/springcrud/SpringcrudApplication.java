@@ -1,7 +1,9 @@
 package com.springcrud.springcrud;
 
+import com.springcrud.springcrud.dao.CourseDAO;
 import com.springcrud.springcrud.dao.StudentDAO;
 import com.springcrud.springcrud.dao.StudentDAOImplementation;
+import com.springcrud.springcrud.entity.Course;
 import com.springcrud.springcrud.entity.Student;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,12 +19,30 @@ public class SpringcrudApplication {
 		SpringApplication.run(SpringcrudApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
-		return runner -> {
-			System.out.println("The Project beans has been loaded");
+	public CommandLineRunner commandLineRunner(CourseDAO courseDAO){
+		return runner->{
+			System.out.println("the code started");
+
 		};
 	}
 
+	// course functions
+	public void createCourse(CourseDAO courseDAO){
+		Course course1 = new Course("Advance Data Structure and Algorithm",500);
+		Course course2 = new Course("System Design",2000);
+		Course course3 = new Course("Data Intensive Application",500);
+		// save the course
+		courseDAO.create(course1);
+		courseDAO.create(course2);
+		courseDAO.create(course3);
+		System.out.println("Course created successfully! ");
+	}
+	public void showAllCourse(CourseDAO courseDAO){
+		courseDAO.showAll();
+	}
+
+
+//	student functions
 	public void createStudent(StudentDAO studentDAO){
 		Student student = new Student("Angelina","Rozario","shoili.rozario@gmail.com");
 		System.out.println("Saving the Student...............");
